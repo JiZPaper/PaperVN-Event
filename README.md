@@ -18,7 +18,7 @@
 - Date index: `events-by-date` stores `{date, shards}`, where `shards` lists event data files for that date.
 - Catalogs: `indexes/catalogs/` stores `{path, count, bytes, sha256, first_id, last_id}` for each data or index shard. Use the ID range to select a file without scanning the dataset.
 
-PaperVN Event is used by the [PaperVN App](https://github.com/JiZPaper/PaperVN). Related projects include [VNDB Description Translations](https://github.com/JiZPaper/VNDB-Description-Translations) and [PaperVN Localizations](https://github.com/JiZPaper/PaperVN-Localizations).
+PaperVN Event is used by the [PaperVN App](https://apps.apple.com/us/app/papervn/id6793787678). Related projects include [VNDB Description Translations](https://github.com/JiZPaper/VNDB-Description-Translations) and [PaperVN Localizations](https://github.com/JiZPaper/PaperVN-Localizations).
 
 ### Usage
 
@@ -73,7 +73,7 @@ This dataset is free content released under [CC0 1.0](LICENSE).
 - 日期索引：`events-by-date` 保存 `{date, shards}`，其中 `shards` 列出该日期对应的活动数据文件。
 - 目录清单：`indexes/catalogs/` 保存每个数据或索引分片的 `{path, count, bytes, sha256, first_id, last_id}`。客户端可通过 ID 范围直接选择文件，而不必扫描整个数据集。
 
-本数据集用于 [PaperVN App](https://github.com/JiZPaper/PaperVN)。相关项目：[VNDB简介翻译](https://github.com/JiZPaper/VNDB-Description-Translations)、[PaperVN本地化](https://github.com/JiZPaper/PaperVN-Localizations)。
+本数据集用于 [PaperVN App](https://apps.apple.com/us/app/papervn/id6793787678)。相关项目：[VNDB简介翻译](https://github.com/JiZPaper/VNDB-Description-Translations)、[PaperVN本地化](https://github.com/JiZPaper/PaperVN-Localizations)。
 
 ### 使用方法
 
@@ -122,7 +122,7 @@ Swift 客户端可以使用 `URLSession` 和 `Decodable`，先缓存 manifest �
 - 日期索引：`events-by-date` 保存 `{date, shards}`，`shards` 列出該日期的活動資料檔案。
 - 目錄清單：`indexes/catalogs/` 保存每個資料或索引分片的 `{path, count, bytes, sha256, first_id, last_id}`，可依 ID 範圍直接選擇檔案。
 
-本資料集用於 [PaperVN App](https://github.com/JiZPaper/PaperVN)。相關專案：[VNDB簡介翻譯](https://github.com/JiZPaper/VNDB-Description-Translations)、[PaperVN本地化](https://github.com/JiZPaper/PaperVN-Localizations)。
+本資料集用於 [PaperVN App](https://apps.apple.com/us/app/papervn/id6793787678)。相關專案：[VNDB簡介翻譯](https://github.com/JiZPaper/VNDB-Description-Translations)、[PaperVN本地化](https://github.com/JiZPaper/PaperVN-Localizations)。
 
 ### 使用方式
 
@@ -156,7 +156,7 @@ curl -L "$BASE/indexes/actors/actors-index-000001.json"
 - 日付インデックス：`events-by-date` の各レコードは `{date, shards}` 形式です。
 - カタログ：`indexes/catalogs/` に各分割ファイルの `{path, count, bytes, sha256, first_id, last_id}` を収録し、ID の範囲から対象ファイルを選べます。
 
-PaperVN Event は [PaperVN App](https://github.com/JiZPaper/PaperVN) で使用します。関連プロジェクト：[VNDB Description Translations](https://github.com/JiZPaper/VNDB-Description-Translations)、[PaperVN Localizations](https://github.com/JiZPaper/PaperVN-Localizations)。
+PaperVN Event は [PaperVN App](https://apps.apple.com/us/app/papervn/id6793787678) で使用します。関連プロジェクト：[VNDB Description Translations](https://github.com/JiZPaper/VNDB-Description-Translations)、[PaperVN Localizations](https://github.com/JiZPaper/PaperVN-Localizations)。
 
 ### 使い方
 
@@ -188,7 +188,7 @@ curl -L "$BASE/indexes/actors/actors-index-000001.json"
 - 날짜 인덱스: `events-by-date`의 각 레코드는 `{date, shards}` 형식입니다.
 - 카탈로그: `indexes/catalogs/`에 각 데이터·인덱스 조각의 `{path, count, bytes, sha256, first_id, last_id}`가 있어 ID 범위로 파일을 선택할 수 있습니다.
 
-PaperVN Event는 [PaperVN App](https://github.com/JiZPaper/PaperVN)에서 사용됩니다. 관련 프로젝트: [VNDB Description Translations](https://github.com/JiZPaper/VNDB-Description-Translations), [PaperVN Localizations](https://github.com/JiZPaper/PaperVN-Localizations).
+PaperVN Event는 [PaperVN App](https://apps.apple.com/us/app/papervn/id6793787678)에서 사용됩니다. 관련 프로젝트: [VNDB Description Translations](https://github.com/JiZPaper/VNDB-Description-Translations), [PaperVN Localizations](https://github.com/JiZPaper/PaperVN-Localizations).
 
 ### 사용 방법
 
