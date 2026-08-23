@@ -4,16 +4,19 @@
 
 **PaperVN Event** is a free dataset for the PaperVN App. It contains information about nearly 500,000 offline events related to anime, visual novels, and games, including dates, venues, related performers/voice actors, and associated projects.
 
-The data is exported from Eventernote into small JSON-array shards. `manifest.json` is the entry point. Entity records are in `data/`; search and relationship indexes are in `indexes/`. Use the catalog files referenced by `manifest.json` to locate a shard, then download only the required JSON file. The target shard size is 32 KiB. A shard may be larger when one individual source record is larger than the target; records are never truncated.
+### Data Structure
 
-Main entity fields are preserved from the database, including the original `raw` Eventernote JSON when available:
+`manifest.json` describes the snapshot, record counts, file patterns, and catalog locations. Entity records are stored as JSON arrays under `data/`; search and relationship indexes are stored as JSON arrays under `indexes/`. A missing value is represented by `null`. Entity rows retain the database fields and may include a `raw` object with the original unprocessed payload.
 
-- `events`: event ID, title, date/time, venue ID, URL, project information, and source fields.
-- `actors`: performer/voice-actor ID, name, kana, initial, URL, and source fields.
-- `places`: venue ID, name, address/location fields, URL, and source fields.
-- `event_actors`: event-to-actor relationships.
-- `event_links`: event-related URLs.
-- `indexes`: compact search, date, and relationship lookups that point to data shards.
+- `events`: one row per event. Fields include the numeric ID, `name`, `event_date` (`YYYY-MM-DD`), `weekday`, `open_time`, `start_time`, `end_time`, `place_id`, `url`, `image_url`, `official_url`, `twitter_hashtag`, `note_count`, `participants_count`, `is_past`, `raw`, `first_seen_at`, and `last_seen_at`.
+- `actors`: one row per performer or voice actor. Fields include the numeric ID, `name`, `kana`, `initial`, `sex`, `favorite_count`, `event_count`, `fan_count`, `image_url`, `url`, `all_events_url`, `raw`, `first_seen_at`, and `last_seen_at`.
+- `places`: one row per venue. Fields include the numeric ID, `name`, `prefecture_id`, `address`, `postal_code`, `tel`, `capacity`, `web_url`, `seat_url`, `latitude`, `longitude`, `url`, `event_count`, `map_url`, `raw`, `first_seen_at`, and `last_seen_at`.
+- `event_actors`: many-to-many links with `event_id` and `actor_id`.
+- `event_links`: event links with `event_id` and `url`.
+- Search indexes: `indexes/actors/`, `indexes/places/`, and `indexes/events/` contain compact names, dates, IDs, and the data-shard path in `shard`.
+- Relationship indexes: `events-by-actor` stores `{actor_id, event_ids}`; `actors-by-event` stores `{event_id, actor_ids}`. Their lookup directories map an ID to the relationship shard containing it.
+- Date index: `events-by-date` stores `{date, shards}`, where `shards` lists event data files for that date.
+- Catalogs: `indexes/catalogs/` stores `{path, count, bytes, sha256, first_id, last_id}` for each data or index shard. Use the ID range to select a file without scanning the dataset.
 
 PaperVN Event is used by the [PaperVN App](https://github.com/JiZPaper/PaperVN). Related projects include [VNDB Description Translations](https://github.com/JiZPaper/VNDB-Description-Translations) and [PaperVN Localizations](https://github.com/JiZPaper/PaperVN-Localizations).
 
@@ -56,9 +59,19 @@ This dataset is free content released under [CC0 1.0](LICENSE).
 
 “PaperVN活动”（**PaperVN Event**）是供 PaperVN App 使用的自由数据集，包含动画、视觉小说与游戏等近 50 万场线下活动的时间、地点、相关演职人员与相关企划等信息。
 
-数据由 Eventernote 导出为小型 JSON 数组分片。`manifest.json` 是入口文件；实体数据位于 `data/`，搜索和关系索引位于 `indexes/`。请先读取 `manifest.json` 中引用的目录清单，再按需下载对应分片。目标分片大小为 32 KiB；如果单条原始记录本身大于该大小，对应文件会超过目标，但不会截断记录。
+### 数据结构
 
-主要数据结构如下：`events` 活动；`actors` 演职人员/声优；`places` 场地；`event_actors` 活动与演职人员关系；`event_links` 活动相关链接；`indexes` 搜索、日期和关系索引。数据库字段均予以保留，并在可用时保留 Eventernote 原始 JSON 字段 `raw`。
+`manifest.json` 描述数据快照、记录数量、文件匹配模式和目录清单。实体记录以 JSON 数组存放在 `data/`，搜索与关系索引以 JSON 数组存放在 `indexes/`。缺失值使用 `null` 表示。实体记录保留数据库字段，并且可能包含未加工的原始数据对象 `raw`。
+
+- `events`：每条记录对应一场活动。字段包括数字 ID、`name`、`event_date`（`YYYY-MM-DD`）、`weekday`、`open_time`、`start_time`、`end_time`、`place_id`、`url`、`image_url`、`official_url`、`twitter_hashtag`、`note_count`、`participants_count`、`is_past`、`raw`、`first_seen_at` 和 `last_seen_at`。
+- `actors`：每条记录对应一名演职人员或声优。字段包括数字 ID、`name`、`kana`、`initial`、`sex`、`favorite_count`、`event_count`、`fan_count`、`image_url`、`url`、`all_events_url`、`raw`、`first_seen_at` 和 `last_seen_at`。
+- `places`：每条记录对应一个活动场地。字段包括数字 ID、`name`、`prefecture_id`、`address`、`postal_code`、`tel`、`capacity`、`web_url`、`seat_url`、`latitude`、`longitude`、`url`、`event_count`、`map_url`、`raw`、`first_seen_at` 和 `last_seen_at`。
+- `event_actors`：活动与演职人员的多对多关系，字段为 `event_id` 和 `actor_id`。
+- `event_links`：活动相关链接，字段为 `event_id` 和 `url`。
+- 搜索索引：`indexes/actors/`、`indexes/places/` 和 `indexes/events/` 保存用于搜索的名称、日期、ID，以及指向实体分片的 `shard` 路径。
+- 关系索引：`events-by-actor` 保存 `{actor_id, event_ids}`；`actors-by-event` 保存 `{event_id, actor_ids}`。对应的 lookup 目录把 ID 映射到包含关系记录的分片。
+- 日期索引：`events-by-date` 保存 `{date, shards}`，其中 `shards` 列出该日期对应的活动数据文件。
+- 目录清单：`indexes/catalogs/` 保存每个数据或索引分片的 `{path, count, bytes, sha256, first_id, last_id}`。客户端可通过 ID 范围直接选择文件，而不必扫描整个数据集。
 
 本数据集用于 [PaperVN App](https://github.com/JiZPaper/PaperVN)。相关项目：[VNDB简介翻译](https://github.com/JiZPaper/VNDB-Description-Translations)、[PaperVN本地化](https://github.com/JiZPaper/PaperVN-Localizations)。
 
@@ -95,9 +108,19 @@ Swift 客户端可以使用 `URLSession` 和 `Decodable`，先缓存 manifest �
 
 「PaperVN活動」（**PaperVN Event**）是供 PaperVN App 使用的自由資料集，包含動畫、視覺小說與遊戲等近 50 萬場線下活動的時間、地點、相關演職人員與相關企劃等資訊。
 
-資料由 Eventernote 匯出為小型 JSON 陣列分片。`manifest.json` 是入口檔案；實體資料位於 `data/`，搜尋與關係索引位於 `indexes/`。請先讀取 `manifest.json` 所引用的目錄清單，再按需下載對應分片。目標分片大小為 32 KiB；若單筆原始記錄本身大於該大小，對應檔案會超過目標，但不會截斷記錄。
+### 資料結構
 
-主要資料結構如下：`events` 活動；`actors` 演職人員/聲優；`places` 場地；`event_actors` 活動與演職人員關係；`event_links` 活動相關連結；`indexes` 搜尋、日期與關係索引。資料庫欄位均予以保留，並在可用時保留 Eventernote 原始 JSON 欄位 `raw`。
+`manifest.json` 描述資料快照、記錄數量、檔案匹配模式與目錄清單。實體記錄以 JSON 陣列存放於 `data/`，搜尋與關係索引以 JSON 陣列存放於 `indexes/`。缺少的值使用 `null` 表示。實體記錄保留資料庫欄位，也可能包含未加工的原始資料物件 `raw`。
+
+- `events`：每筆記錄對應一場活動，包含數字 ID、`name`、`event_date`（`YYYY-MM-DD`）、`weekday`、開放與開始/結束時間、`place_id`、各種 URL、標籤、留言與參與人數、`is_past`、`raw` 及抓取時間欄位。
+- `actors`：每筆記錄對應一名演職人員或聲優，包含數字 ID、`name`、`kana`、`initial`、性別與統計數值、圖片與活動 URL、`raw` 及抓取時間欄位。
+- `places`：每筆記錄對應一個活動場地，包含數字 ID、名稱、都道府縣 ID、地址、郵遞區號、電話、容量、網站、座位圖、座標、地圖 URL、活動數量、`raw` 及抓取時間欄位。
+- `event_actors`：活動與演職人員的多對多關係，欄位為 `event_id` 與 `actor_id`。
+- `event_links`：活動相關連結，欄位為 `event_id` 與 `url`。
+- 搜尋索引：`indexes/actors/`、`indexes/places/`、`indexes/events/` 保存名稱、日期、ID 及指向實體分片的 `shard` 路徑。
+- 關係索引：`events-by-actor` 保存 `{actor_id, event_ids}`；`actors-by-event` 保存 `{event_id, actor_ids}`。lookup 目錄把 ID 對應到關係分片。
+- 日期索引：`events-by-date` 保存 `{date, shards}`，`shards` 列出該日期的活動資料檔案。
+- 目錄清單：`indexes/catalogs/` 保存每個資料或索引分片的 `{path, count, bytes, sha256, first_id, last_id}`，可依 ID 範圍直接選擇檔案。
 
 本資料集用於 [PaperVN App](https://github.com/JiZPaper/PaperVN)。相關專案：[VNDB簡介翻譯](https://github.com/JiZPaper/VNDB-Description-Translations)、[PaperVN本地化](https://github.com/JiZPaper/PaperVN-Localizations)。
 
@@ -119,9 +142,19 @@ curl -L "$BASE/indexes/actors/actors-index-000001.json"
 
 「PaperVNイベント」（英語名 **PaperVN Event**）は PaperVN App 用の自由なデータセットです。アニメ、ビジュアルノベル、ゲームなどに関する約 50 万件のオフラインイベントについて、日時、会場、出演者・声優、関連企画などを収録しています。
 
-Eventernote から小さな JSON 配列の分割ファイルとして書き出しています。`manifest.json` が入口で、実体データは `data/`、検索・関連インデックスは `indexes/` にあります。`manifest.json` のカタログから必要な分割ファイルだけを取得してください。目標サイズは 32 KiB です。元の 1 レコードが目標より大きい場合はファイルが大きくなりますが、レコードは切り詰めません。
+### データ構造
 
-主な構造：`events` イベント、`actors` 出演者・声優、`places` 会場、`event_actors` イベントと出演者の関係、`event_links` 関連 URL、`indexes` 検索・日付・関係インデックス。データベースの全フィールドを保持し、利用可能な場合は Eventernote の元 JSON を `raw` に保存しています。
+`manifest.json` にはスナップショット、件数、ファイルパターン、カタログの場所が記録されています。実体レコードは `data/`、検索・関連インデックスは `indexes/` に UTF-8 の JSON 配列として保存されています。値がない場合は `null` です。各レコードのデータベースフィールドを保持し、利用できる場合は未加工のデータを `raw` オブジェクトに保存します。
+
+- `events`：イベント ID、`name`、日付（`event_date`）、曜日、開場・開始・終了時刻、`place_id`、各種 URL、ハッシュタグ、メモ数・参加者数、`is_past`、`raw`、取得時刻。
+- `actors`：出演者・声優の ID、`name`、`kana`、`initial`、性別と統計値、画像・イベント URL、`raw`、取得時刻。
+- `places`：会場 ID、名称、都道府県 ID、住所、郵便番号、電話、収容人数、Web・座席・地図 URL、緯度経度、イベント数、`raw`、取得時刻。
+- `event_actors`：`event_id` と `actor_id` による多対多関係。
+- `event_links`：`event_id` と `url` による関連 URL。
+- 検索インデックス：`indexes/actors/`、`indexes/places/`、`indexes/events/` に検索用の名称・日付・ID と実体分割ファイルへの `shard` パスを収録。
+- 関連インデックス：`events-by-actor` は `{actor_id, event_ids}`、`actors-by-event` は `{event_id, actor_ids}` を収録し、lookup ディレクトリで ID から関連分割ファイルを特定できます。
+- 日付インデックス：`events-by-date` の各レコードは `{date, shards}` 形式です。
+- カタログ：`indexes/catalogs/` に各分割ファイルの `{path, count, bytes, sha256, first_id, last_id}` を収録し、ID の範囲から対象ファイルを選べます。
 
 PaperVN Event は [PaperVN App](https://github.com/JiZPaper/PaperVN) で使用します。関連プロジェクト：[VNDB Description Translations](https://github.com/JiZPaper/VNDB-Description-Translations)、[PaperVN Localizations](https://github.com/JiZPaper/PaperVN-Localizations)。
 
@@ -141,9 +174,19 @@ curl -L "$BASE/indexes/actors/actors-index-000001.json"
 
 **PaperVN Event**는 PaperVN App을 위한 자유 데이터 세트입니다. 애니메이션, 비주얼 노벨, 게임 등과 관련된 약 50만 건의 오프라인 이벤트에 대해 날짜와 시간, 장소, 관련 출연자·성우, 관련 기획 정보를 제공합니다.
 
-Eventernote에서 작은 JSON 배열 조각으로 내보냈습니다. `manifest.json`이 진입점이며, 실제 데이터는 `data/`, 검색 및 관계 인덱스는 `indexes/`에 있습니다. `manifest.json`에 지정된 카탈로그에서 필요한 조각만 가져오세요. 목표 조각 크기는 32 KiB입니다. 원본 레코드 하나가 목표보다 크면 파일이 더 커질 수 있지만 레코드는 잘리지 않습니다.
+### 데이터 구조
 
-주요 구조: `events` 이벤트, `actors` 출연자·성우, `places` 장소, `event_actors` 이벤트와 출연자 관계, `event_links` 관련 URL, `indexes` 검색·날짜·관계 인덱스. 데이터베이스의 모든 필드를 보존하며, 가능한 경우 Eventernote 원본 JSON을 `raw` 필드에 보존합니다.
+`manifest.json`에는 스냅샷, 레코드 수, 파일 패턴, 카탈로그 위치가 기록됩니다. 실제 레코드는 `data/`, 검색 및 관계 인덱스는 `indexes/`에 UTF-8 JSON 배열로 저장됩니다. 값이 없으면 `null`입니다. 각 레코드는 데이터베이스 필드를 보존하며, 가능한 경우 가공되지 않은 데이터 객체를 `raw`에 저장합니다.
+
+- `events`: 이벤트 ID, `name`, `event_date`（`YYYY-MM-DD`）, 요일, 입장·시작·종료 시간, `place_id`, 각종 URL, 해시태그, 메모·참가자 수, `is_past`, `raw`, 수집 시각.
+- `actors`: 출연자·성우 ID, `name`, `kana`, `initial`, 성별과 통계, 이미지·이벤트 URL, `raw`, 수집 시각.
+- `places`: 장소 ID, 이름, 도도부현 ID, 주소, 우편번호, 전화번호, 수용 인원, 웹·좌석·지도 URL, 위도·경도, 이벤트 수, `raw`, 수집 시각.
+- `event_actors`: `event_id`와 `actor_id`로 구성된 다대다 관계.
+- `event_links`: `event_id`와 `url`로 구성된 관련 링크.
+- 검색 인덱스: `indexes/actors/`, `indexes/places/`, `indexes/events/`에 이름, 날짜, ID와 실제 데이터 조각을 가리키는 `shard` 경로가 있습니다.
+- 관계 인덱스: `events-by-actor`는 `{actor_id, event_ids}`, `actors-by-event`는 `{event_id, actor_ids}`를 저장하며 lookup 디렉터리에서 ID로 관계 조각을 찾습니다.
+- 날짜 인덱스: `events-by-date`의 각 레코드는 `{date, shards}` 형식입니다.
+- 카탈로그: `indexes/catalogs/`에 각 데이터·인덱스 조각의 `{path, count, bytes, sha256, first_id, last_id}`가 있어 ID 범위로 파일을 선택할 수 있습니다.
 
 PaperVN Event는 [PaperVN App](https://github.com/JiZPaper/PaperVN)에서 사용됩니다. 관련 프로젝트: [VNDB Description Translations](https://github.com/JiZPaper/VNDB-Description-Translations), [PaperVN Localizations](https://github.com/JiZPaper/PaperVN-Localizations).
 
