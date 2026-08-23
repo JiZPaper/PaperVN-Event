@@ -22,8 +22,6 @@ PaperVN Event is used by the [PaperVN App](https://apps.apple.com/us/app/papervn
 
 ### Usage
 
-The repository is a static dataset. A client should fetch only the files needed for a query instead of cloning the repository or downloading all of `data/`.
-
 ```text
 BASE = https://raw.githubusercontent.com/JiZPaper/PaperVN-Event/main/
 1. Fetch BASE/manifest.json.
@@ -51,8 +49,6 @@ curl -L "$BASE/manifest.json"
 curl -L "$BASE/indexes/actors/actors-index-000001.json"
 ```
 
-Swift clients can use `URLSession` with `Decodable`, persist the manifest and index shards in the app's cache directory, and issue requests only for the data shards returned by the indexes.
-
 This dataset is free content released under [CC0 1.0](LICENSE).
 
 ## 简体中文
@@ -77,8 +73,6 @@ This dataset is free content released under [CC0 1.0](LICENSE).
 
 ### 使用方法
 
-这是一个静态数据集。客户端不应克隆整个仓库，也不应一次性下载 `data/`；应先读取索引，只获取当前查询所需的文件。
-
 ```text
 BASE = https://raw.githubusercontent.com/JiZPaper/PaperVN-Event/main/
 1. 下载 BASE/manifest.json。
@@ -99,8 +93,6 @@ BASE='https://raw.githubusercontent.com/JiZPaper/PaperVN-Event/main'
 curl -L "$BASE/manifest.json"
 curl -L "$BASE/indexes/actors/actors-index-000001.json"
 ```
-
-Swift 客户端可以使用 `URLSession` 和 `Decodable`，先缓存 manifest 与索引，再只请求索引返回的活动分片；不要在 App 启动时下载整个仓库。
 
 “PaperVN活动”是自由内容，遵循 [CC0 1.0](LICENSE) 协议。
 
@@ -125,10 +117,6 @@ Swift 客户端可以使用 `URLSession` 和 `Decodable`，先缓存 manifest �
 本資料集用於 [PaperVN App](https://apps.apple.com/us/app/papervn/id6793787678)。相關專案：[VNDB簡介翻譯](https://github.com/JiZPaper/VNDB-Description-Translations)、[PaperVN本地化](https://github.com/JiZPaper/PaperVN-Localizations)。
 
 ### 使用方式
-
-這是靜態資料集。客戶端不應複製整個儲存庫，也不應一次下載 `data/`；請先讀取索引，只取得目前查詢需要的檔案。流程與簡體中文章節相同：讀取 `manifest.json`，下載 catalog 分片，依 `first_id` 與 `last_id` 找到資料路徑，再取得對應 JSON 陣列。
-
-查詢聲優行程時，依序使用 `indexes/actors/`、`indexes/events-by-actor-lookup/`、`indexes/events-by-actor/`，再透過 `events` catalog 取得 `data/events/` 的活動資料。日期索引位於 `indexes/events-by-date/`；反向活動查詢位於 `indexes/actors-by-event-lookup/` 與 `indexes/actors-by-event/`。請在 App 快取 manifest 與索引，並在 `generated_at` 改變時更新。
 
 ```sh
 BASE='https://raw.githubusercontent.com/JiZPaper/PaperVN-Event/main'
@@ -160,8 +148,6 @@ PaperVN Event は [PaperVN App](https://apps.apple.com/us/app/papervn/id67937876
 
 ### 使い方
 
-静的データセットのため、リポジトリ全体を clone したり `data/` を一括取得したりせず、`manifest.json` と必要なインデックスだけを取得してください。catalog の `first_id` と `last_id` で対象分割ファイルの `path` を特定し、その JSON 配列を取得します。出演者・声優の予定は `indexes/actors/` → `indexes/events-by-actor-lookup/` → `indexes/events-by-actor/` → `data/events/` の順に参照します。日付検索は `indexes/events-by-date/`、イベントから出演者を探す場合は `indexes/actors-by-event-lookup/` と `indexes/actors-by-event/` を使用します。`manifest.json` の `generated_at` を確認し、インデックスと取得済みデータをアプリのキャッシュに保存してください。
-
 ```sh
 BASE='https://raw.githubusercontent.com/JiZPaper/PaperVN-Event/main'
 curl -L "$BASE/manifest.json"
@@ -191,8 +177,6 @@ curl -L "$BASE/indexes/actors/actors-index-000001.json"
 PaperVN Event는 [PaperVN App](https://apps.apple.com/us/app/papervn/id6793787678)에서 사용됩니다. 관련 프로젝트: [VNDB Description Translations](https://github.com/JiZPaper/VNDB-Description-Translations), [PaperVN Localizations](https://github.com/JiZPaper/PaperVN-Localizations).
 
 ### 사용 방법
-
-정적 데이터 세트이므로 저장소 전체를 clone하거나 `data/`를 한 번에 내려받지 마세요. 먼저 `manifest.json`과 필요한 인덱스를 가져온 뒤, catalog의 `first_id`와 `last_id`로 대상 분할 파일의 `path`를 찾고 해당 JSON 배열만 요청합니다. 성우 일정은 `indexes/actors/` → `indexes/events-by-actor-lookup/` → `indexes/events-by-actor/` → `data/events/` 순서로 조회합니다. 날짜 검색은 `indexes/events-by-date/`, 이벤트에서 출연자를 찾는 역방향 조회는 `indexes/actors-by-event-lookup/` 및 `indexes/actors-by-event/`를 사용합니다. `manifest.json`의 `generated_at`을 확인하고 manifest, 인덱스, 다운로드한 데이터를 앱 캐시에 저장하세요.
 
 ```sh
 BASE='https://raw.githubusercontent.com/JiZPaper/PaperVN-Event/main'
