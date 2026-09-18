@@ -1,4 +1,4 @@
-[{"path":"indexes/places/places-index-000001.json","count":4500,"bytes":524281,"sha256":"26a373d2ad78e477d2072f995fc44bed9c8c308d0ddecc6a4f50bd4ab9881e62","first_id":0,"last_id":4592},
-{"path":"indexes/places/places-index-000002.json","count":4539,"bytes":524273,"sha256":"d551bd21719be1cc4a82f9cc78a6b7ff482c5c8e352d48a4601d58c5cf9bf80f","first_id":4593,"last_id":9343},
-{"path":"indexes/places/places-index-000003.json","count":4542,"bytes":524247,"sha256":"28c5601de4df1d42906d49e7806a1529a1116eb5f340e9ee6a77186d53822db5","first_id":9347,"last_id":14488},
-{"path":"indexes/places/places-index-000004.json","count":2998,"bytes":339334,"sha256":"c8f589e1be8128277e217e000ab17d87b5f5bca98fc45c6311f6ebc0c1fad495","first_id":14489,"last_id":27842}]
+[{"path":"indexes/places/places-index-000001.json","count":4500,"bytes":524169,"sha256":"af3c5553250dc3ab20a8610cf457a12d3159e1af8390f038ea48653dc95b56c3","first_id":0,"last_id":4591},
+{"path":"indexes/places/places-index-000002.json","count":4540,"bytes":524283,"sha256":"c5bb520d6887f99cb6c2aa7e8f7902a210986cc49811a4f97f2f562b6593e345","first_id":4592,"last_id":9340},
+{"path":"indexes/places/places-index-000003.json","count":4540,"bytes":524220,"sha256":"56967d8cb7da84ac82e7a4f793e424d518b55bd133409a921910904d5d3f6510","first_id":9341,"last_id":14472},
+{"path":"indexes/places/places-index-000004.json","count":3094,"bytes":349942,"sha256":"b5dfc0b4a43cc76f0417ebd390177798d2fbf4ec68373a4ce89e55cc84ed0859","first_id":14473,"last_id":27919}]

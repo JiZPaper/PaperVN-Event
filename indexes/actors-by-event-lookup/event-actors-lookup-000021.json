@@ -1552,6 +1552,8 @@
 {"id":149734,"shard":"indexes/actors-by-event/event-actors-000017.json"},
 {"id":149735,"shard":"indexes/actors-by-event/event-actors-000017.json"},
 {"id":149736,"shard":"indexes/actors-by-event/event-actors-000017.json"},
+{"id":149737,"shard":"indexes/actors-by-event/event-actors-000017.json"},
+{"id":149738,"shard":"indexes/actors-by-event/event-actors-000017.json"},
 {"id":149740,"shard":"indexes/actors-by-event/event-actors-000017.json"},
 {"id":149741,"shard":"indexes/actors-by-event/event-actors-000017.json"},
 {"id":149742,"shard":"indexes/actors-by-event/event-actors-000017.json"},
@@ -7079,6 +7081,4 @@
 {"id":155574,"shard":"indexes/actors-by-event/event-actors-000017.json"},
 {"id":155575,"shard":"indexes/actors-by-event/event-actors-000017.json"},
 {"id":155576,"shard":"indexes/actors-by-event/event-actors-000017.json"},
-{"id":155577,"shard":"indexes/actors-by-event/event-actors-000017.json"},
-{"id":155578,"shard":"indexes/actors-by-event/event-actors-000017.json"},
-{"id":155579,"shard":"indexes/actors-by-event/event-actors-000017.json"}]
+{"id":155577,"shard":"indexes/actors-by-event/event-actors-000017.json"}]

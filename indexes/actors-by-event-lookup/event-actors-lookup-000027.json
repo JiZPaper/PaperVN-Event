@@ -1,4 +1,6 @@
-[{"id":192674,"shard":"indexes/actors-by-event/event-actors-000022.json"},
+[{"id":192672,"shard":"indexes/actors-by-event/event-actors-000022.json"},
+{"id":192673,"shard":"indexes/actors-by-event/event-actors-000022.json"},
+{"id":192674,"shard":"indexes/actors-by-event/event-actors-000022.json"},
 {"id":192675,"shard":"indexes/actors-by-event/event-actors-000022.json"},
 {"id":192676,"shard":"indexes/actors-by-event/event-actors-000022.json"},
 {"id":192677,"shard":"indexes/actors-by-event/event-actors-000022.json"},
@@ -2977,9 +2979,9 @@
 {"id":195740,"shard":"indexes/actors-by-event/event-actors-000022.json"},
 {"id":195741,"shard":"indexes/actors-by-event/event-actors-000022.json"},
 {"id":195742,"shard":"indexes/actors-by-event/event-actors-000022.json"},
-{"id":195743,"shard":"indexes/actors-by-event/event-actors-000022.json"},
-{"id":195744,"shard":"indexes/actors-by-event/event-actors-000022.json"},
-{"id":195745,"shard":"indexes/actors-by-event/event-actors-000022.json"},
+{"id":195743,"shard":"indexes/actors-by-event/event-actors-000023.json"},
+{"id":195744,"shard":"indexes/actors-by-event/event-actors-000023.json"},
+{"id":195745,"shard":"indexes/actors-by-event/event-actors-000023.json"},
 {"id":195746,"shard":"indexes/actors-by-event/event-actors-000023.json"},
 {"id":195747,"shard":"indexes/actors-by-event/event-actors-000023.json"},
 {"id":195748,"shard":"indexes/actors-by-event/event-actors-000023.json"},
@@ -7079,6 +7081,4 @@
 {"id":199988,"shard":"indexes/actors-by-event/event-actors-000023.json"},
 {"id":199989,"shard":"indexes/actors-by-event/event-actors-000023.json"},
 {"id":199990,"shard":"indexes/actors-by-event/event-actors-000023.json"},
-{"id":199991,"shard":"indexes/actors-by-event/event-actors-000023.json"},
-{"id":199992,"shard":"indexes/actors-by-event/event-actors-000023.json"},
-{"id":199993,"shard":"indexes/actors-by-event/event-actors-000023.json"}]
+{"id":199991,"shard":"indexes/actors-by-event/event-actors-000023.json"}]
