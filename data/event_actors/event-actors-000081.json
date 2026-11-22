@@ -1,4 +1,5 @@
-[{"event_id":230055,"actor_id":40037},
+[{"event_id":230055,"actor_id":39969},
+{"event_id":230055,"actor_id":40037},
 {"event_id":230055,"actor_id":40142},
 {"event_id":230055,"actor_id":40153},
 {"event_id":230055,"actor_id":40706},
@@ -13856,5 +13857,4 @@
 {"event_id":232242,"actor_id":21966},
 {"event_id":232242,"actor_id":24912},
 {"event_id":232242,"actor_id":35188},
-{"event_id":232242,"actor_id":37430},
-{"event_id":232242,"actor_id":38204}]
+{"event_id":232242,"actor_id":37430}]
